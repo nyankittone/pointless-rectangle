@@ -5,6 +5,8 @@ use std::io::stdin;
 use std::iter::Iterator;
 use std::process::exit;
 
+// Adding the Debug trait isn't strictly necessary here, since dbg! or something similar is never
+// called. I don't feel like removing it tho.
 #[derive(Debug)]
 struct Rectangle {
     length: u32,
@@ -19,6 +21,7 @@ impl Rectangle {
         }
     }
 
+    // This is never used in this code, but it's here anyway, as an example for myself, I suppose.
     fn new_square(size: u32) -> Self {
         Self {
             length: size,
@@ -42,6 +45,8 @@ fn print_help(program_name: &str) {
     );
 }
 
+// This method is called by main() for converting some of our args to u32's. If a parsing error
+// happens, this function will on-its-own close the program.
 fn try_parsing_thing(thing: &String) -> u32 {
     let returned = thing.trim().parse();
     if returned.is_err() {
@@ -77,6 +82,10 @@ where I: Iterator<Item = &'a str>, {
     })
 }
 
+// Printing stuff about the Rectangle passed in, and then reading from stdin to create a new
+// Rectangle to compare to. Print information for that Rectangle too, and then say if the new
+// Rectangle can be fit within the old one or not. do this in a loop that is broken when the user
+// types "quit" or "q" as input.
 fn run_eval_loop(compared_rectangle: Rectangle) {
     println!("Source rectangle has length {} and height {}.",compared_rectangle.length,compared_rectangle.height);
     println!("That's an area of {}.",compared_rectangle.area());
